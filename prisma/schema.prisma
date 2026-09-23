@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model LcaScenario {
+  id                      String   @id @default(cuid())
+  name                    String
+  description             String?
+  isDefault               Boolean  @default(false)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  // Farm Parameters
+  ffbYieldPerHa           Float    @default(21.0)
+  plantationAreaHa        Float    @default(2500.0)
+  peatSoilPercentage      Float    @default(0.0)
+  ureaKgPerHa             Float    @default(220.0)
+  ammoniumSulfateKgPerHa  Float    @default(100.0)
+  npkKgPerHa              Float    @default(200.0)
+  npkRatioN               Float    @default(0.15)
+  npkRatioP2O5            Float    @default(0.15)
+  npkRatioK2O             Float    @default(0.15)
+  rockPhosphateKgPerHa    Float    @default(150.0)
+  mopKclKgPerHa           Float    @default(250.0)
+  dolomiteKgPerHa         Float    @default(180.0)
+  herbicideAiKgPerHa      Float    @default(2.5)
+  dieselTractorLitersPerHa Float   @default(45.0)
+  efbMulchingTonsPerHa    Float    @default(15.0)
+  transportDistanceKm     Float    @default(25.0)
+  truckPayloadTons        Float    @default(8.0)
+  truckFuelLitersPer100Km Float    @default(35.0)
+
+  // Mill Parameters
+  annualFfbProcessedTons  Float    @default(150000.0)
+  oer                     Float    @default(0.22)
+  ker                     Float    @default(0.05)
+  fiberFraction           Float    @default(0.135)
+  shellFraction           Float    @default(0.065)
+  efbFraction             Float    @default(0.22)
+  boilerDieselStartupLPerTonFfb Float @default(0.20)
+  gridElectricityExportKwhPerTonFfb Float @default(0.0)
+  pomeRatioM3PerTonFfb    Float    @default(0.65)
+  pomeCodMgPerL           Float    @default(30000.0)
+  pomeBodMgPerL           Float    @default(25000.0)
+  treatmentMethod         String   @default("OPEN_ANAEROBIC_LAGOON")
+  methaneCaptureEfficiency Float   @default(0.90)
+  biogasGeneratorEfficiencyKwhPerM3Ch4 Float @default(3.5)
+  biogasPowerExportPercentage Float @default(80.0)
+  allocationMethod        String   @default("ENERGY")
+  priceCpoUsdPerTon       Float    @default(920.0)
+  pricePkUsdPerTon        Float    @default(520.0)
+  lhvCpoMjPerKg           Float    @default(37.0)
+  lhvPkMjPerKg            Float    @default(24.0)
+
+  // Cached Calculated Outputs
+  totalGwpPerTonCpo       Float?
+  totalGwpPerKgCpo        Float?
+  upstreamEmissionsKgCo2  Float?
+  transportEmissionsKgCo2 Float?
+  millEmissionsKgCo2      Float?
+  pomeEmissionsKgCo2      Float?
+  carbonCreditsKgCo2      Float?
+  palmGhgrating           String?
+}
+
+model EmissionFactor {
+  id          String   @id @default(cuid())
+  category    String   // FERTILIZER, FUEL, POME, TRANSPORT, LUC
+  code        String   @unique
+  name        String
+  value       Float
+  unit        String
+  source      String   // IPCC 2019, RSPO PalmGHG, ISPO
+  description String?
+}
