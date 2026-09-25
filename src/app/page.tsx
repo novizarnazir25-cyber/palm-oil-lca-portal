@@ -17,6 +17,7 @@ import SystemBoundaryDiagram from '@/components/SystemBoundaryDiagram';
 import EnvironmentalImpacts from '@/components/EnvironmentalImpacts';
 import HotspotChart from '@/components/HotspotChart';
 import ReportExporter from '@/components/ReportExporter';
+import LciaFrameworkDiagram from '@/components/LciaFrameworkDiagram';
 import { INITIAL_SCENARIOS } from '@/lib/db';
 import { LcaSimulationScenario } from '@/lib/lca/types';
 
@@ -138,6 +139,14 @@ export default function DashboardPage() {
           result={result}
           farm={activeScenario.farmInputs}
           mill={activeScenario.millInputs}
+        />
+      )}
+
+      {/* Visual Diagram: LCIA Midpoint & Endpoint Cause-Effect Framework */}
+      {result && (
+        <LciaFrameworkDiagram
+          midpoint={result.midpoint}
+          endpoint={result.endpoint}
         />
       )}
 

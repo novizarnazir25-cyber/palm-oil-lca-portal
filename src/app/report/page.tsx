@@ -772,6 +772,23 @@ export default function FinalReportPage() {
             <span className="text-xs font-mono text-emerald-800 font-semibold">ReCiPe 2016 Hierarchist</span>
           </div>
 
+          {/* Diagram Rantai Kausalitas ReCiPe 2016 Midpoint to Endpoint */}
+          <div className="border border-slate-200 rounded-xl p-3 bg-slate-50 space-y-2">
+            <span className="text-[11px] font-bold text-slate-800 block">
+              Gambar 4.1 Rantai Kausalitas Dampak Daur Hidup ReCiPe 2016 (LCI ➔ Midpoint ➔ Endpoint)
+            </span>
+            <div className="rounded-lg overflow-hidden border border-slate-300">
+              <img
+                src="/lcia_framework_recipe2016.jpg"
+                alt="Diagram Rantai Kausalitas ReCiPe 2016 Midpoint to Endpoint Sawit"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <p className="text-[10px] text-slate-600 leading-relaxed italic text-justify">
+              Ilustrasi kerangka kerja ReCiPe 2016 Hierarchist: Menggambarkan mekanisme aliran emisi inventori (LCI) dari perkebunan dan PKS yang dikarakterisasi ke dalam 5 kategori dampak tingkat masalah (Midpoint), kemudian dimodelkan lebih lanjut melalui jalur kerusakan biofisik menuju 3 Area Proteksi (Endpoint AoP: Kesehatan Manusia, Kualitas Ekosistem, dan Kelangkaan Sumber Daya).
+            </p>
+          </div>
+
           {/* Sub-bab 4.1: Tahapan Siklus Hidup */}
           <div className="space-y-2">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wide">
