@@ -276,8 +276,8 @@ export default function CalculatorPage() {
         pomeMethod={millInputs.treatmentMethod}
       />
 
-      {/* Live Calculated Impacts */}
-      <EnvironmentalImpacts result={result} />
+      {/* Live Calculated Impacts (Multi-Functional Unit Scaled) */}
+      <EnvironmentalImpacts result={result} farm={farmInputs} mill={millInputs} />
 
       {/* Live Hotspot Chart */}
       <HotspotChart result={result} />

@@ -172,12 +172,14 @@ export default function FinalReportPage() {
       ['Tanggal Laporan', reportDate],
       ['Skenario Terpilih', currentScenario.name],
       [''],
-      ['=== RINGKASAN INDIKATOR UTAMA (FUNCTIONAL UNIT: 1 TON CPO) ==='],
-      ['Indikator', 'Nilai', 'Satuan'],
-      ['Jejak Karbon Bersih (Net GWP100)', r.totalGwpPerTonCpo, 'kg CO2eq / ton CPO'],
-      ['Jejak Karbon per 1 kg CPO', r.totalGwpPerKgCpo, 'kg CO2eq / kg CPO'],
-      ['Jejak Karbon per 1 ton TBS', r.totalGwpPerTonFfb, 'kg CO2eq / ton TBS'],
-      ['Peringkat PalmGHG', `Grade ${r.palmGhgrating}`, 'RSPO Benchmark'],
+      ['=== RINGKASAN INDIKATOR UTAMA MULTI-FUNCTIONAL UNIT ==='],
+      ['Indikator & Satuan Fungsional', 'Nilai Terukur', 'Satuan / Standar Acuan'],
+      ['FU 1: 1 Ton CPO (Mill Gate)', r.totalGwpPerTonCpo, 'kg CO2eq / ton CPO (ISO 14044 & RSPO)'],
+      ['FU 2: 1 kg CPO (Produk Hilir/Retail)', r.totalGwpPerKgCpo, 'kg CO2eq / kg CPO (GHG Protocol Scope 3)'],
+      ['FU 3: 1 Ton TBS / FFB (Pintu Kebun)', r.totalGwpPerTonFfb, 'kg CO2eq / ton TBS (ISPO Prinsip 3)'],
+      ['FU 4: 1 MJ Bioenergi CPO (EU RED II)', (r.totalGwpPerTonCpo / 37.0).toFixed(2), 'g CO2eq / MJ (LHV 37 MJ/kg)'],
+      ['FU 5: 1 Hektar Kebun Sawit / Tahun', (r.totalGwpPerTonCpo * f.ffbYieldPerHa * m.oer).toFixed(0), 'kg CO2eq / Ha.thn (IPCC AFOLU)'],
+      ['Peringkat Kinerja PalmGHG', `Grade ${r.palmGhgrating}`, 'Benchmark RSPO PalmGHG v4'],
       ['Kredit Karbon Bersih Terhindar', r.carbonCreditsKgCo2, 'kg CO2eq / ton CPO'],
       [''],
       ['=== DAMPAK TINGKAT MIDPOINT (ReCiPe 2016 H) ==='],
@@ -550,9 +552,55 @@ export default function FinalReportPage() {
             <p>
               <strong>2.1 Tujuan Kajian (Goal):</strong> Mengidentifikasi titik kritis (<em>hotspots</em>) beban emisi GRK dan dampak lingkungan lainnya di sepanjang rantai nilai hulu perkebunan dan pabrik kelapa sawit, menyediakan baseline emisi terverifikasi untuk sertifikasi ekspor (seperti RSPO, ISCC, dan pemenuhan regulasi <em>European Union Deforestation Regulation</em> / EUDR), serta merumuskan skenario intervensi teknologi dekarbonisasi yang paling layak secara teknis dan ekonomis.
             </p>
-            <p>
-              <strong>2.2 Satuan Fungsional (Functional Unit):</strong> Satuan fungsional utama didefinisikan sebagai <strong>1 Ton Minyak Kelapa Sawit Mentah (Crude Palm Oil / CPO)</strong> dengan spesifikasi asam lemak bebas (FFA) &lt; 5% dan kadar air &lt; 0.25% pada gerbang keluar pabrik kelapa sawit (<em>mill gate</em>). Untuk memfasilitasi keterbandingan data agronomis, hasil juga dikonversikan ke satuan antara <strong>1 Ton Tandan Buah Segar (TBS)</strong> dan <strong>1 kg CPO</strong>.
-            </p>
+            <div>
+              <p>
+                <strong>2.2 Satuan Fungsional (Functional Unit - ISO 14044 Klausul 4.2.3.2):</strong> Satuan fungsional utama didefinisikan sebagai <strong>1 Ton Minyak Kelapa Sawit Mentah (Crude Palm Oil / CPO)</strong> dengan spesifikasi mutu FFA &lt; 5% dan kadar air &lt; 0.25% pada gerbang keluar pabrik kelapa sawit (<em>mill gate</em>). Untuk memfasilitasi audit multi-standar (RSPO, ISPO, EU RED II, dan GHG Protocol), sistem juga menghitung dan menstandarisasi profil emisi ke dalam 5 satuan fungsional setara:
+              </p>
+              <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm my-2.5">
+                <table className="w-full text-xs text-left">
+                  <thead className="bg-slate-100 font-bold text-slate-800 text-[11px]">
+                    <tr>
+                      <th className="p-2 border-b border-slate-200">Satuan Fungsional (FU)</th>
+                      <th className="p-2 border-b border-slate-200">Konteks &amp; Standar Acuan</th>
+                      <th className="p-2 border-b border-slate-200 text-right">Nilai Terukur</th>
+                      <th className="p-2 border-b border-slate-200">Satuan Emisi Normalisasi</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200 text-slate-700 text-[11px]">
+                    <tr className="bg-emerald-50/40 font-semibold text-emerald-950">
+                      <td className="p-2 font-bold">FU 1: 1 Ton CPO (Mill Gate)</td>
+                      <td className="p-2 text-slate-600">Standar Acuan Utama (RSPO PalmGHG &amp; ISO 14044)</td>
+                      <td className="p-2 text-right font-mono font-bold text-emerald-800">{r.totalGwpPerTonCpo.toLocaleString('id-ID')}</td>
+                      <td className="p-2 font-mono">kg CO₂-eq / ton CPO</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 font-medium text-slate-900">FU 2: 1 kg CPO</td>
+                      <td className="p-2 text-slate-600">Produk Hilir &amp; Konsumen (GHG Protocol Scope 3)</td>
+                      <td className="p-2 text-right font-mono font-bold text-sky-800">{r.totalGwpPerKgCpo.toFixed(3)}</td>
+                      <td className="p-2 font-mono">kg CO₂-eq / kg CPO</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 font-medium text-slate-900">FU 3: 1 Ton TBS (FFB)</td>
+                      <td className="p-2 text-slate-600">Pintu Kebun / Hulu Agronomis (ISPO Prinsip 3)</td>
+                      <td className="p-2 text-right font-mono font-bold text-teal-800">{r.totalGwpPerTonFfb.toFixed(1)}</td>
+                      <td className="p-2 font-mono">kg CO₂-eq / ton TBS</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 font-medium text-slate-900">FU 4: 1 MJ Bioenergi CPO</td>
+                      <td className="p-2 text-slate-600">Mandatori Biofuel Uni Eropa (EU RED II, LHV 37 MJ/kg)</td>
+                      <td className="p-2 text-right font-mono font-bold text-amber-800">{(r.totalGwpPerTonCpo / 37.0).toFixed(2)}</td>
+                      <td className="p-2 font-mono">g CO₂-eq / MJ</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 font-medium text-slate-900">FU 5: 1 Hektar Kebun / Thn</td>
+                      <td className="p-2 text-slate-600">Jejak Lanskap &amp; Tutupan Lahan (IPCC 2019 AFOLU)</td>
+                      <td className="p-2 text-right font-mono font-bold text-slate-800">{(r.totalGwpPerTonCpo * f.ffbYieldPerHa * m.oer).toLocaleString('id-ID', { maximumFractionDigits: 0 })}</td>
+                      <td className="p-2 font-mono">kg CO₂-eq / Ha·thn</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <p>
               <strong>2.3 Batasan Sistem (System Boundary - Cradle-to-Gate):</strong> Batasan sistem mencakup tiga subsistem utama:
             </p>

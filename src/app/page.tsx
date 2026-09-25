@@ -132,8 +132,14 @@ export default function DashboardPage() {
         pomeMethod={activeScenario.millInputs.treatmentMethod}
       />
 
-      {/* KPI & Environmental Impacts */}
-      {result && <EnvironmentalImpacts result={result} />}
+      {/* KPI & Environmental Impacts (Multi-Functional Unit Scaled) */}
+      {result && (
+        <EnvironmentalImpacts
+          result={result}
+          farm={activeScenario.farmInputs}
+          mill={activeScenario.millInputs}
+        />
+      )}
 
       {/* Hotspot Breakdown & Visualizations */}
       {result && <HotspotChart result={result} />}

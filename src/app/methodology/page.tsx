@@ -40,18 +40,34 @@ export default function MethodologyPage() {
             </ul>
           </div>
 
-          <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700/60">
-            <h4 className="font-bold text-white mb-1">Satuan Fungsional (Functional Unit):</h4>
-            <p className="text-slate-400 leading-relaxed">
-              Satuan fungsional utama kajian ini adalah:
-            </p>
-            <div className="my-2 p-2.5 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-300 font-mono font-bold text-center">
-              1 Ton Crude Palm Oil (CPO) pada Gerbang PKS
+            <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700/60 space-y-2">
+              <h4 className="font-bold text-white mb-1">Satuan Fungsional (Functional Unit - ISO 14044):</h4>
+              <p className="text-slate-400 leading-relaxed text-[11px]">
+                Sistem mendukung konversi matematis dinamis ke dalam 5 satuan fungsional standar:
+              </p>
+              <div className="space-y-1.5 text-[11px]">
+                <div className="p-2 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-300 font-mono flex justify-between items-center">
+                  <span>1. 1 Ton CPO Gerbang PKS (Acuan Baku)</span>
+                  <span className="text-[10px] text-slate-400">RSPO / ISO 14044</span>
+                </div>
+                <div className="p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono flex justify-between items-center">
+                  <span>2. 1 kg CPO (Produk Konsumen/Retail)</span>
+                  <span className="text-[10px] text-slate-400">GHG Protocol Scope 3</span>
+                </div>
+                <div className="p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono flex justify-between items-center">
+                  <span>3. 1 Ton TBS (Pintu Kebun Hulu)</span>
+                  <span className="text-[10px] text-slate-400">ISPO Prinsip 3</span>
+                </div>
+                <div className="p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono flex justify-between items-center">
+                  <span>4. 1 MJ Bioenergi (LHV 37 MJ/kg)</span>
+                  <span className="text-[10px] text-slate-400">EU RED II Directive</span>
+                </div>
+                <div className="p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono flex justify-between items-center">
+                  <span>5. 1 Hektar Kebun Sawit / Tahun</span>
+                  <span className="text-[10px] text-slate-400">IPCC 2019 AFOLU</span>
+                </div>
+              </div>
             </div>
-            <p className="text-slate-400 leading-relaxed">
-              Satuan antara (*intermediate functional unit*) yang juga dilaporkan adalah <strong>1 Ton TBS pada gerbang kebun</strong>.
-            </p>
-          </div>
         </div>
       </div>
 
